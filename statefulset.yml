@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: dbcont
-          image: kittu1devops/app:dbimage
+          image: kittu1devops/myapp:dbimage
 
           ports:
             - containerPort: 3306
