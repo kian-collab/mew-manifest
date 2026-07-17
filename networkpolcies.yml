@@ -13,30 +13,30 @@ spec:
     - Egress
 
   ingress:
-  - from:
-    - namespaceSelector:
-        matchLabels:
-          kubernetes.io/metadata.name: ingress-nginx
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: ingress-nginx
 
-    ports:
-    - protocol: TCP
-      port: 80  
+      ports:
+        - protocol: TCP
+          port: 80  
 
   egress:
-  - to:
-     - podSelector:
-         matchLabels:
-           app: app-database
+    - to:
+        - podSelector:
+            matchLabels:
+              app: app-database
 
-    ports:
-    - protocol: TCP
-      port: 3306
+      ports:
+        - protocol: TCP
+          port: 3306
 
-  - to:
-    - NamespaceSelector:
-        matchLabels:
-          kubernetes.io/metadata.name: kube-system
+    - to:
+        - NamespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
           
-    ports:
-    - protocol: UDP
-      port: 53      
+     ports:
+       - protocol: UDP
+         port: 53      
