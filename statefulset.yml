@@ -1,0 +1,36 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+spec:
+  serviceName: mysqldb
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: cont1
+          image: 'kittu1devops/myapp:appimage'
+          ports:
+            - containerPort: 80
+
+
+        #configmap Intergation
+          envFrom: 
+            - configMapRef:
+                name: bankapp-config
+
+        # Resource Quota Intergation        
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "200m"
+              memory: "256Mi"
