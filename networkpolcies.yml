@@ -26,7 +26,6 @@ spec:
         - podSelector:
             matchLabels:
               app: app-database
-
       ports:
         - protocol: TCP
           port: 3306
@@ -35,7 +34,6 @@ spec:
         - NamespaceSelector:
             matchLabels:
               kubernetes.io/metadata.name: kube-system
-          
-     ports:
-       - protocol: UDP
-         port: 53      
+      ports:
+        - protocol: UDP
+          port: 53      
