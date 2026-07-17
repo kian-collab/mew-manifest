@@ -5,26 +5,26 @@ metadata:
   name: mysql
 spec:
   serviceName: mysqldb
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
-      app: nginx
+      app: app-database
   template:
     metadata:
       labels:
-        app: nginx
+        app: app-database
     spec:
       containers:
-        - name: cont1
-          image: 'kittu1devops/myapp:appimage'
+        - name: dbcont
+          image: 'kittu1devops/myapp:dbimage'
           ports:
-            - containerPort: 80
+            - containerPort: 3306
 
 
-        #configmap Intergation
+        #Secrets Intergation
           envFrom: 
-            - configMapRef:
-                name: bankapp-config
+            - secretRef:
+                name: bankapp-db-secret
 
         # Resource Quota Intergation        
           resources:
@@ -34,3 +34,16 @@ spec:
             limits:
               cpu: "200m"
               memory: "256Mi"
+
+          volumeMounts:
+            - name: mysql-data
+              mountPath: /usr/share/nginx/html/
+
+  volumeClaimTemplates:
+    - metadata:
+        name: mysql-data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 2Gi            
