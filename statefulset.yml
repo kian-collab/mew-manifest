@@ -1,11 +1,13 @@
----
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: mysql
+  
 spec:
   serviceName: mysqldb
+  
   replicas: 1
+  
   selector:
     matchLabels:
       app: app-database
@@ -13,14 +15,16 @@ spec:
     metadata:
       labels:
         app: app-database
+        
     spec:
       containers:
         - name: dbcont
-          image: 'kittu1devops/myapp:dbimage'
+          image: kittu1devops/myapp:dbimage
+          
           ports:
             - containerPort: 3306
-
-
+              name: mysql
+            
         #Secrets Intergation
           envFrom: 
             - secretRef:
@@ -35,9 +39,9 @@ spec:
               cpu: "200m"
               memory: "256Mi"
 
-          volumeMounts:
-            - name: mysql-data
-              mountPath: /usr/share/nginx/html/
+           volumeMounts:
+             - name: mysql-data
+               mountPath: /usr/share/nginx/html/
 
   volumeClaimTemplates:
     - metadata:
